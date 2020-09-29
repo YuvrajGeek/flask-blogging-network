@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="text-muted" style="padding-left: 14px;padding-top: 14px;">Recent Posts: </h2>
+{% for post in posts.items %}
+
+<div style="padding: 14px;">
+    <div class="card">
+        <div class="card-body">
+            <img class="rounded-circle" src="{{ url_for('static', filename = 'profile_pics/' + post.author.image_file) }}" width="25px" style= "min-width: 25px; max-width:25px; min-height:25px; max-height:25px; ">
+            <strong style="font-size: small; padding-left:6px"><a href="{{ url_for('user_posts', username = post.author.username) }}">
+                {% if post.author.username == "yuvraj_motiramani" %}
+                {{ post.author.username }}  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png" style="min-height: 12px; min-width:12px; max-height: 12px; max-width: 12px;"></a>
+                {% else %}
+                {{ post.author.username }}
+                {% endif %}
+
+            </strong> on <span class="text-muted">
+                {{ post.date_posted.strftime('%Y-%m-%d') }}</span>
+            <hr>
+            <div style="max-width: max-content;">
+                <a href="{{ url_for('post', post_id = post.id) }}" class="post-title">
+                    <h1 class="post text-break">{{ post.title }}
+                        <hr>
+                    </h1>
+                </a>
+            </div>
+            {{ post.content }}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% for page_num in posts.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 2) %}
+    {% if page_num %}
+    {% if posts.page == page_num %}
+        <div style="padding-left:14px; display:inline">
+            <a class="btn btn-info mb-4" href="{{ url_for('home', page = page_num) }}">{{ page_num }}</a>
+        </div>
+    {% else %}
+    <div style="padding-left:14px; display:inline">
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page = page_num) }}">{{ page_num }}</a>
+    </div>
+    {% endif %}
+
+    {% else %}
+        ....
+    {% endif %}
+{% endfor %}
+{% endblock content %}

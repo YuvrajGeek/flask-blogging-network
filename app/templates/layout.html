@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>ABlog · {{ title }}</title>
+    {% else %}
+    <title>ABlog</title>
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto+Slab&display=swap');
+
+        .alert {
+            padding: 14px 14px;
+        }
+
+        .post {
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        a.post-title {
+            text-decoration: none;
+            color: #40403f;
+            font-family: "Roboto Slab";
+            transition: all 0.4s ease 0s;
+        }
+
+        a.post-title:hover {
+            color: #002e78;
+        }
+
+        .navbar {
+            font-family: "Roboto Slab";
+        }
+
+        .card-body strong {
+            font-family: "Roboto Slab";
+        }
+
+        .register {
+            font-family: "Roboto Slab";
+        }
+
+        .brandname {
+            transition: all 0.2s ease-in-out 0s;
+        }
+
+        .brandname:hover {
+            text-shadow: 2px 2px 2px burlywood;
+        }
+
+        .username {
+            font-family: "Roboto Slab";
+            padding: 0px 0px;
+        }
+
+        .success {
+            padding-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <strong><a class="navbar-brand brandname" href="{{ url_for('home') }}">ABlog</a></strong>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About ABlog</a>
+                </li>
+            </ul>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('account') }}" style="padding-right: 10px;"><button
+                    class="btn btn-outline-success my-2 my-sm-0" type="submit"><img
+                        src="{{ url_for('static', filename = 'profile_pics/' + current_user.image_file) }}" width="25px"
+                        style="border-radius: 50%;min-height:25px;min-width:25px;max-height:25px;max-width:25px;"> {{ current_user
+                    .username }}</button></a>
+            <a href="{{ url_for('new_post') }}" style="padding-right: 10px;"><button
+                    class="btn btn-outline-success my-2 my-sm-0" type="submit">New Post</button></a>
+            <a href="{{ url_for('logout') }}"><button class="btn btn-outline-success my-2 my-sm-0"
+                    type="submit">Logout</button></a>
+            {% else %}
+            <a href="{{ url_for('login') }}" style="padding-right: 10px;"><button
+                    class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button></a>
+            <div>
+                <a href="{{ url_for('register') }}"><button class="btn btn-info my-2 my-sm-0"
+                        type="submit">Register</button></a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} card">
+        <strong>{{ message }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block content %}
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
