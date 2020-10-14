@@ -1,2 +1,1 @@
-<h1>Flask Blogging Network</h1>
-<p>Personal Advice: Don't use Flask for a blogging network. Usage of flask is soothing until deploying small apps and ML algorithms only. However, before learning Django, you should definitely make a blogging network with Flask because to experience the cool of Django, you need to first take up the heat of Flask. Blogging network with Flask teaches you the fundamentals of User Authentication and working with forms and SQLite3 Databases. </p>
+<img src="https://repository-images.githubusercontent.com/299491246/77e1ea00-0d49-11eb-95b5-95b11838d502">
